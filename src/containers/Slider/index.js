@@ -60,10 +60,11 @@ if (byDateDesc.length === 0) {
               <div className="SlideCard__pagination">
                 {byDateDesc.map((_, radioIdx) => (
                   <input
-                    key={event.id}
+                    key={`${byDateDesc[radioIdx].title}-${byDateDesc[radioIdx].date}`}
                     type="radio"
                     name="radio-button"
-                    checked={idx === radioIdx}
+                    checked={index === radioIdx}
+                    onChange={() => setIndex(radioIdx)}
                   />
                 ))}
               </div>
