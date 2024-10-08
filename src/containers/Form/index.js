@@ -8,6 +8,11 @@ const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 500)
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
+  const [name, setName] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
+
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
@@ -16,6 +21,11 @@ const Form = ({ onSuccess, onError }) => {
       try {
         await mockContactApi();
         setSending(false);
+        onSuccess(); // launch the Modal
+        setMessage("");
+        setName("");
+        setfirstName("");
+        setEmail("");
       } catch (err) {
         setSending(false);
         onError(err);
@@ -27,8 +37,8 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field placeholder="" label="Nom" />
-          <Field placeholder="" label="Prénom" />
+          <Field placeholder="" label="Nom" value={name} onChange={(e) => setName(e.target.value)}/> 
+          <Field placeholder="" label="Prénom" value={firstName} onChange={(e) => setfirstName(e.target.value)} />
           <Select
             selection={["Personel", "Entreprise"]}
             onChange={() => null}
@@ -36,7 +46,7 @@ const Form = ({ onSuccess, onError }) => {
             type="large"
             titleEmpty
           />
-          <Field placeholder="" label="Email" />
+          <Field placeholder="" label="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer"}
           </Button>
@@ -46,6 +56,9 @@ const Form = ({ onSuccess, onError }) => {
             placeholder="message"
             label="Message"
             type={FIELD_TYPES.TEXTAREA}
+            required="true"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
         </div>
       </div>
