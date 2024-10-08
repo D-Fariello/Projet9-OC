@@ -56,7 +56,7 @@ const Form = ({ onSuccess, onError }) => {
             placeholder="message"
             label="Message"
             type={FIELD_TYPES.TEXTAREA}
-            required="true"
+            required
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
