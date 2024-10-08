@@ -7,18 +7,35 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
-  const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-  );
-  const nextCard = () => {
-    setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
-      5000
-    );
-  };
-  useEffect(() => {
-    nextCard();
-  });
+  
+  // Ensure data is available before sorting
+ const byDateDesc = data?.focus?.length
+ ? data.focus.sort((evtA, evtB) => new Date(evtA.date) < new Date(evtB.date) ? -1 : 1)
+ : [];
+
+
+// Only set interval if byDateDesc has data
+useEffect(() => {
+ if (byDateDesc.length > 0) {
+   const interval = setInterval(() => {
+     setIndex((prevIndex) => (prevIndex + 1) % byDateDesc.length);
+   }, 5000); // Slide change every 5 seconds
+
+
+   return () => clearInterval(interval); // Cleanup interval on unmount
+ }
+
+
+ return undefined; // Return undefined if byDateDesc.length is 0
+}, [byDateDesc.length]);
+
+
+// Show a loading state or empty component if no data is available
+if (byDateDesc.length === 0) {
+ return <div>Loading...</div>; // Or a more sophisticated loading spinner
+}
+
+
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
