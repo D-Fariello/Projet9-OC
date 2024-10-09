@@ -13,13 +13,7 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {data} = useData()
-
-  if (!data || data.length === 0) {
-    return <div>Loading...</div>; // Handle loading or empty data
-  }
- 
-  const lastEvent = data.events[data.events.length - 1]; // Get the last event in the array
+  const {last} = useData()
 
   return <>
     <header>
@@ -63,7 +57,7 @@ const Page = () => {
         <EventList />
       </section>
       <section className="PeoplesContainer">
-        <h2 className="Title" id="notre-equipe">Notre équipe</h2>
+        <h2 className="Title">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
         <div className="ListContainer">
           <PeopleCard
@@ -123,13 +117,15 @@ const Page = () => {
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={lastEvent?.cover}
-          title={lastEvent?.title}
-          date={new Date(lastEvent?.date)}
-          small
-          label="boom"
-        />
+        {last && (
+           <EventCard
+           imageSrc={last?.cover}
+           title={last?.title}
+           date={new Date(last?.date)}
+           small
+           label="boom"
+         />
+        )}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>

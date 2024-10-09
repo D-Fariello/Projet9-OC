@@ -19,6 +19,18 @@ export const api = {
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+
+  // Creation of a new ordered table eventByDateDesc from data.events, with the events sorted by date from most recent to oldest.
+  const eventsByDateDesc =
+    data && data.events
+      ? [...data.events].sort((evtA, evtB) =>
+          new Date(evtA.date) < new Date(evtB.date) ? 1 : -1
+        )
+      : [];
+
+  // Define last to retrieve data from the most recent event (ordered table eventsByDateDesc). If the table is empty, last is null, fixing the footer display bug (last provider shown).
+  const last = eventsByDateDesc.length > 0 ? eventsByDateDesc[0] : null;
+
   const getData = useCallback(async () => {
     try {
       setData(await api.loadData());
@@ -37,6 +49,7 @@ export const DataProvider = ({ children }) => {
       value={{
         data,
         error,
+        last,
       }}
     >
       {children}
