@@ -32,7 +32,7 @@ useEffect(() => {
 
 // Show a loading state or empty component if no data is available
 if (byDateDesc.length === 0) {
- return <div>Loading...</div>; // Or a more sophisticated loading spinner
+ return <div>Loading...</div>;
 }
 
 

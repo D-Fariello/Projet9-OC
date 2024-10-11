@@ -14,7 +14,7 @@ const Field = ({
   name,
   placeholder,
   required,
-  errorMessage = "This field is required",
+  errorMessage = "Ce champ est obligatoire",
   value = "", // Accept value prop
   onChange // Accept onChange prop
 }) => {
@@ -91,7 +91,7 @@ Field.propTypes = {
    type: FIELD_TYPES.INPUT_TEXT,
    name: "field-name",
    required: true,
-   errorMessage: "This field is required",
+   errorMessage: "Ce champ est obligatoire",
    value: "", // Default value as an empty string
    onChange: () => {}, // Default onChange as a no-op function
  }
