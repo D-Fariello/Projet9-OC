@@ -10,8 +10,8 @@ const Slider = () => {
 
   // Ensure data is available before sorting
  const byDateDesc = data?.focus?.length
- ? data.focus.sort((evtA, evtB) => new Date(evtA.date) < new Date(evtB.date) ? -1 : 1)
- : [];
+ ? data.focus.sort((evtA, evtB) => new Date(evtB.date) - new Date(evtA.date))
+  : [];
 
 
 // Only set interval if byDateDesc has data
@@ -38,9 +38,7 @@ if (byDateDesc.length === 0) {
 
   return (
     <div className="SlideCardList">
-      {byDateDesc
-        ?.sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date in ascending order
-        .map((event, idx) => (
+      {byDateDesc.map((event, idx) => (
           <div key={event.title}>
             <div
               className={`SlideCard SlideCard--${
